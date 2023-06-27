@@ -5,7 +5,7 @@
     <h3 th:text="${errorMessage}"></h3>
     <form th:action="@{#}" method="post">
         <label for="name">Category Name :</label>
-        <input type="text" name="name" id="name" th:value="${category.getName()}">
+        <input type="text" name="name" id="name" th:value="${category!=null}? ${category.getName()} : ''">
         <button class="btn btn-info">Send</button>
     </form>
 

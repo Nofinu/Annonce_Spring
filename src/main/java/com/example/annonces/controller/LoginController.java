@@ -38,6 +38,7 @@ public class LoginController {
         ModelAndView modelAndView =new ModelAndView("redirect:/annonce");
         _httpSession.setAttribute("isLogged",false);
         _httpSession.setAttribute("isAdmin",false);
+        _httpSession.setAttribute("userId",0);
         return modelAndView;
     }
 

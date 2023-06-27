@@ -44,4 +44,6 @@ public class Annonce {
         this.status = true;
         this.dateAdd = new Date(System.currentTimeMillis());
     }
+
+
 }

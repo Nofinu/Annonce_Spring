@@ -37,10 +37,17 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${annonce.getTitle()}"></h5>
                         <p class="card-text" th:text="${annonce.getContent()}" ></p>
+                        <div class="d-flex flex-row justify-content-between">
+                            <div th:text="${annonce.getPrice()}+'€'"></div>
+                            <div th:text="${annonce.getUser().getUsername()}"></div>
+                        </div>
                         <div class="d-flex flex-row flex-wrap">
                             <div class="border border-secondary text-secondary rounded p-2 mb-1"  th:each="category : ${annonce.getCategories()}" th:text="${category.getName()}"></div>
                         </div>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <div>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a th:if="${annonce.getUser().getId() == userId || isAdmin}" th:href="@{/annonce/edit/{id}(id = ${annonce.getId()})}" class="btn btn-info">Edit</a>
+                        </div>
                     </div>
                 </div>
             </div>

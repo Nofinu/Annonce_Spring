@@ -68,7 +68,7 @@ public class ServiceAnnonce implements IServiceAnnonce {
             annonce.setPrice(price);
             annonce.setCategories(new ArrayList<>());
             for (Integer idCategory:categoryId) {
-                annonce.addCategory(_serviceCategory.findById(id));
+                annonce.addCategory(_serviceCategory.findById(idCategory));
             }
             return _annonceRepository.save(annonce);
         }

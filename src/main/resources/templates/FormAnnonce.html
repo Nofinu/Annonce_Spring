@@ -3,24 +3,27 @@
 <head th:replace="~{fragments/head.html :: head}"></head>
 <body>
 <div th:text="${errorMessage}" class="text-danger"></div>
-  <form th:action="@{/annonce/add}" method="post" enctype="multipart/form-data" class="d-flex flex-column" style="width: 50%">
+  <form action="#" method="post" enctype="multipart/form-data" class="d-flex flex-column" style="width: 50%">
 
       <label for="title">Title :</label>
-      <input type="text" name="title" id="title">
+      <input type="text" name="title" id="title" th:value="${annonce!=null}? ${annonce.getTitle()} : ''">
 
       <label for="content">Title :</label>
-      <textarea name="content" id="content" style="resize: none"></textarea>
+      <textarea name="content" id="content" style="resize: none" th:text="${annonce!=null}? ${annonce.getContent()} : ''"></textarea>
 
       <label for="price">Title :</label>
-      <input type="number" step="0.1" min="0" name="price" id="price">
+      <input type="number" step="0.1" min="0" name="price" id="price" th:value="${annonce!=null}? ${annonce.getPrice()} : 0">
 
       <label for="category">Category :</label>
       <select name="category"  id="category" multiple class="form-control">
-        <option th:each="category : ${categoryList}" th:value="${category.getId()}" th:text="${category.getName()}"></option>
+        <option th:each="category : ${categoryList}" th:value="${category.getId()}" th:text="${category.getName()}" th:selected="${annonce!=null}? ${annonce.getCategories().contains(category)} : false"></option>
       </select>
 
-      <label for="image">Image :</label>
-      <input type="file" name="image" id="image">
+      <div th:if="${annonce==null}">
+          <label for="image">Image :</label>
+          <input type="file" name="image" id="image">
+      </div>
+
 
       <button class="btn btn-outline-info">Send</button>
   </form>
