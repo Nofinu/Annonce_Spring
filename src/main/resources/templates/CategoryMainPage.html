@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head.html :: head}"></head>
+<body>
+
+  <h2>Category</h2>
+  <div th:text="${message}"></div>
+  <a href="/annonce/category/add" class="btn btn-outline-info">Add</a>
+  <table class="table table-striped table-dark">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Action</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="category : ${categoryList}">
+      <th th:text="${category.getId()}"></th>
+      <th th:text="${category.getName()}"></th>
+      <th>
+        <a th:href="@{/annonce/category/edit/{id}(id = ${category.getId()})}" class="btn btn-outline-info">Edit</a>
+        <a th:href="@{/annonce/category/delete/{id}(id = ${category.getId()})}" class="btn btn-outline-danger">delete</a>
+      </th>
+    </tr>
+    </tbody>
+  </table>
+</body>
+</html>
