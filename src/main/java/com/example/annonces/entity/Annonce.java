@@ -21,7 +21,7 @@ public class Annonce {
     private boolean status;
     @ManyToOne
     private User user;
-    @OneToMany
+    @OneToMany(mappedBy = "annonce",fetch = FetchType.EAGER)
     private List<Image> images = new ArrayList<>();
     @ManyToMany
     private List<Category> categories = new ArrayList<>();

@@ -49,6 +49,10 @@ public class AnnonceController {
         modelAndView.addObject("annonces", annonces);
 
         modelAndView.addObject("userId", (Integer) _httpSession.getAttribute("userId"));
+        List<Integer> favoris = (List<Integer>) _httpSession.getAttribute("favoris");
+        modelAndView.addObject("favoris", favoris);
+
+        modelAndView.addObject("url","annonce");
 
         return modelAndView;
     }
@@ -84,32 +88,51 @@ public class AnnonceController {
 
     @GetMapping("/edit/{id}")
     public ModelAndView getEditAnnonce(@PathVariable("id") Integer id) {
-        ModelAndView modelAndView =new ModelAndView("redirect:/annonce");
+        ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         Annonce annonce = _serviceAnnonce.findById(id);
-        if(isLogged() && annonce.getUser().getId() == (Integer)_httpSession.getAttribute("userId")){
+        if (isLogged() && (annonce.getUser().getId() == (Integer) _httpSession.getAttribute("userId") || (boolean) _httpSession.getAttribute("isAdmin"))) {
             modelAndView.addObject("categoryList", _serviceCategory.findAll());
             modelAndView.setViewName("FormAnnonce");
-            modelAndView.addObject("annonce",annonce);
+            modelAndView.addObject("annonce", annonce);
         }
         return modelAndView;
     }
 
     @PostMapping("/edit/{id}")
-    public ModelAndView postEditAnnonce(@PathVariable("id")Integer id,@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("price") double price, @RequestParam("category") List<Integer> category){
-        ModelAndView modelAndView =new ModelAndView("redirect:/annonce");
+    public ModelAndView postEditAnnonce(@PathVariable("id") Integer id, @RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("price") double price, @RequestParam("category") List<Integer> category, @RequestParam("image") List<MultipartFile> images) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         Annonce annonce = _serviceAnnonce.findById(id);
-        if(isLogged() && annonce.getUser().getId() == (Integer)_httpSession.getAttribute("userId")){
+        if (isLogged() && (annonce.getUser().getId() == (Integer) _httpSession.getAttribute("userId") || (boolean) _httpSession.getAttribute("isAdmin"))) {
             modelAndView.setViewName("redirect:/annonce/add");
-            try{
-                _serviceAnnonce.update(id,title,content,price,category);
+            try {
+                _serviceAnnonce.update(id, title, content, price, category, images);
                 modelAndView.setViewName("redirect:/annonce");
-            }catch (Exception e){
-                modelAndView.addObject("errorMessage",e.getMessage());
+            } catch (Exception e) {
+                modelAndView.addObject("errorMessage", e.getMessage());
             }
         }
         return modelAndView;
     }
 
+    @GetMapping("/delete/{id}")
+    public ModelAndView getDeleteAnnonce(@PathVariable("id") Integer id) {
+
+        return new ModelAndView();
+    }
+
+    @GetMapping("/{id}")
+    public ModelAndView getAnnonceDetails(@PathVariable("id") Integer id) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
+        if (isLogged()) {
+            Annonce annonce = _serviceAnnonce.findById(id);
+            List<Integer> favoris =(List<Integer>) _httpSession.getAttribute("favoris");
+            modelAndView.addObject("favoris",favoris);
+            modelAndView.addObject("annonce", annonce);
+            modelAndView.addObject("url","annonce/"+id);
+            modelAndView.setViewName("AnnonceDetails");
+        }
+        return modelAndView;
+    }
 
     private boolean isLogged() {
         if (_httpSession.getAttribute("isLogged") != null) {

@@ -3,7 +3,7 @@
 <head th:replace="~{fragments/head.html :: head}"></head>
 <body>
     <header>
-        <nav class="d-flex flex-row align-items-center justify-content-between bg-dark">
+        <nav class="d-flex flex-row align-items-center justify-content-between bg-dark px-2">
             <div class="d-flex justify-content-around align-items-center">
                 <h1 class="text-primary">Annonce</h1>
                 <div th:if="${isAdmin}">
@@ -11,7 +11,8 @@
                     <a href="/annonce/user" class="btn btn-outline-info">User</a>
                 </div>
                 <div th:if="${isLogged}">
-                    <a href="/annonce/log/register" class="btn btn-outline-info">Annonce</a>
+                    <a href="/annonce/add" class="btn btn-outline-info">Crée une Annonce</a>
+                    <a href="/annonce/favoris" class="btn btn-outline-info">Favoris</a>
                     <a href="/annonce/log/login" class="btn btn-outline-info">recherche</a>
                 </div>
             </div>
@@ -31,12 +32,15 @@
 
     <main class="d-flex justify-content-center">
 
-        <div class="row" style="width: 90%;margin-top: 35px">
+        <div th:if="${isLogged}" class="row" style="width: 90%;margin-top: 35px">
             <div class="col-4" th:each="annonce : ${annonces}">
-                <div class="card" >
+                <div class="card my-1" >
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${annonce.getTitle()}"></h5>
-                        <p class="card-text" th:text="${annonce.getContent()}" ></p>
+                        <div class="d-flex flex-row justify-content-between">
+                            <h5 class="card-title" th:text="${annonce.getTitle()}"></h5>
+                            <a th:href="@{/annonce/favoris/?id=${annonce.id}}" class="btn btn-outline-secondary text-warning"><i th:class="${favoris.contains(annonce.getId())}? 'bi bi-star-fill': 'bi bi-star'"></i></a>
+                        </div>
+                        <div th:text="${#dates.format(annonce.getDateAdd(),'dd-MM-yyyy')}"></div>
                         <div class="d-flex flex-row justify-content-between">
                             <div th:text="${annonce.getPrice()}+'€'"></div>
                             <div th:text="${annonce.getUser().getUsername()}"></div>
@@ -45,8 +49,9 @@
                             <div class="border border-secondary text-secondary rounded p-2 mb-1"  th:each="category : ${annonce.getCategories()}" th:text="${category.getName()}"></div>
                         </div>
                         <div>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <a th:href="@{/annonce/{id}(id = ${annonce.getId()})}" class="btn btn-primary">Details</a>
                             <a th:if="${annonce.getUser().getId() == userId || isAdmin}" th:href="@{/annonce/edit/{id}(id = ${annonce.getId()})}" class="btn btn-info">Edit</a>
+                            <a th:if="${annonce.getUser().getId() == userId || isAdmin}" th:href="@{/annonce/delete/{id}(id = ${annonce.getId()})}" class="btn btn-danger">Delete</a>
                         </div>
                     </div>
                 </div>

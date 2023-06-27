@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/head.html :: head}"></head>
+<body>
+
+<main>
+    <a th:href="@{/annonce/favoris/{id}(id = ${annonce.getId()})/{url}(url=${url})}" class="btn btn-outline-secondary text-warning"><i th:class="${favoris.contains(annonce.getId())}? 'bi bi-star-fill': 'bi bi-star'"></i></a>
+    <h2 th:text="${annonce.getTitle()}"></h2>
+
+    <div th:text="${annonce.getContent()}"></div>
+
+    <div th:text="${annonce.getPrice()}"></div>
+
+    <div>
+        <div th:each="category : ${annonce.getCategories()}" th:text="${category.getName()}" class="border border-secondary text-secondary rounded p-2 mb-1"></div>
+    </div>
+
+    <div th:each="image : ${annonce.getImages()}">
+        <img  th:src="@{/{uri}(uri = ${image.getUrl()})}" style="max-height: 300px" alt="imageAnnonce">
+    </div>
+</main>
+
+</body>
+</html>

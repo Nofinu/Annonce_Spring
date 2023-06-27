@@ -1,0 +1,28 @@
+
+<header>
+  <nav class="d-flex flex-row align-items-center justify-content-between bg-dark px-2">
+    <div class="d-flex justify-content-around align-items-center">
+      <h1 class="text-primary">Annonce</h1>
+      <div th:if="${isAdmin}">
+        <a href="/annonce/category" class="btn btn-outline-info">Category</a>
+        <a href="/annonce/user" class="btn btn-outline-info">User</a>
+      </div>
+      <div th:if="${isLogged}">
+        <a href="/annonce/add" class="btn btn-outline-info">Crée une Annonce</a>
+        <a href="/annonce/favoris" class="btn btn-outline-info">Favoris</a>
+        <a href="/annonce/log/login" class="btn btn-outline-info">recherche</a>
+      </div>
+    </div>
+
+    <div class="d-flex">
+      <div th:if="${isLogged}">
+        <a href="/annonce/log/logout" class="btn btn-outline-info">Log Out</a>
+      </div>
+
+      <div th:unless="${isLogged}">
+        <a href="/annonce/log/register" class="btn btn-outline-info">Register</a>
+        <a href="/annonce/log/login" class="btn btn-outline-info">Log In</a>
+      </div>
+    </div>
+  </nav>
+</header>

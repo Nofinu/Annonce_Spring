@@ -9,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/annonce/log")
 public class LoginController {
@@ -39,6 +42,7 @@ public class LoginController {
         _httpSession.setAttribute("isLogged",false);
         _httpSession.setAttribute("isAdmin",false);
         _httpSession.setAttribute("userId",0);
+        _httpSession.setAttribute("favoris",new ArrayList<>());
         return modelAndView;
     }
 
@@ -53,6 +57,8 @@ public class LoginController {
                 _httpSession.setAttribute("isAdmin",false);
                 User user = _serviceUser.findByUsername(username);
                 _httpSession.setAttribute("userId",user.getId());
+                List<Integer> favoris = new ArrayList<>();
+                _httpSession.setAttribute("favoris",favoris);
                 modelAndView.setViewName("redirect:/annonce");
             }else
                 modelAndView.addObject("errorMessage","erreure durant la creation de l'utilisateur");
@@ -61,6 +67,8 @@ public class LoginController {
                 _httpSession.setAttribute("isLogged",true);
                 User user = _serviceUser.findByUsername(username);
                 _httpSession.setAttribute("userId",user.getId());
+                List<Integer> favoris = new ArrayList<>();
+                _httpSession.setAttribute("favoris",favoris);
 
                 if(_serviceUser.isAdmin(username))
                     _httpSession.setAttribute("isAdmin",true);
