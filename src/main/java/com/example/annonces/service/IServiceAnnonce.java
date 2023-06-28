@@ -14,4 +14,6 @@ public interface IServiceAnnonce {
     public boolean delete (int id);
     public List<Annonce> findAll();
     public Annonce findById(int id);
+    public List<Annonce> findByCategory (int idCategory);
+    public List<Annonce> findBytitle (String title);
 }

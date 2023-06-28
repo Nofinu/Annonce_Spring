@@ -96,4 +96,17 @@ public class ServiceAnnonce implements IServiceAnnonce {
         Optional<Annonce> annonce =  _annonceRepository.findById(id);
         return annonce.orElse(null);
     }
+
+    @Override
+    public List<Annonce> findByCategory(int idCategory) {
+        Category category = _serviceCategory.findById(idCategory);
+        return _annonceRepository.findByCategoriesContaining(category);
+    }
+
+    @Override
+    public List<Annonce> findBytitle(String title) {
+        return _annonceRepository.findByTitleContaining(title);
+    }
+
+
 }

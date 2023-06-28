@@ -43,7 +43,7 @@ public class FavorisController {
     }
 
     @GetMapping("/{id}/{url}")
-    public ModelAndView getAddFavoris(@PathVariable("id") Integer id, @PathVariable("url")String url) {
+    public ModelAndView getAddFavoris(@PathVariable("id") Integer id, @PathVariable("url")Integer url) {
         ModelAndView modelAndView= new ModelAndView("redirect:/annonce");
         if(isLogged()){
             List<Integer> favoris = (List<Integer>) _httpSession.getAttribute("favoris");
@@ -53,7 +53,21 @@ public class FavorisController {
                 favoris.add(id);
             }
             _httpSession.setAttribute("favoris",favoris);
-            modelAndView.setViewName("/"+url);
+            switch (url){
+                case 0:
+                    modelAndView.setViewName("redirect:/annonce");
+                    break;
+                case -1:
+                    modelAndView.setViewName("redirect:/annonce/favoris");
+                    break;
+                case -2:
+                    modelAndView.setViewName("redirect:/annonce/search");
+                    break;
+                default:
+                    modelAndView.setViewName("redirect:/annonce/"+url);
+                    break;
+            }
+
         }
         return modelAndView;
     }

@@ -22,6 +22,7 @@ public class CategoryController {
     public ModelAndView getCategory() {
         ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         if (isAdmin()) {
+            giveLoggedAndAdmin(modelAndView);
             modelAndView.addObject("categoryList", _serviceCategory.findAll());
             modelAndView.setViewName("CategoryMainPage");
         }
@@ -32,6 +33,7 @@ public class CategoryController {
     public ModelAndView getAddCategory() {
         ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         if (isAdmin()) {
+            giveLoggedAndAdmin(modelAndView);
             modelAndView.setViewName("FormCategory");
         }
         return modelAndView;
@@ -41,6 +43,7 @@ public class CategoryController {
     public ModelAndView getEditCategory(@PathVariable("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         if (isAdmin()) {
+            giveLoggedAndAdmin(modelAndView);
             modelAndView.setViewName("redirect:/annonce/category");
             Category category = _serviceCategory.findById(id);
             if (category != null) {
@@ -102,6 +105,11 @@ public class CategoryController {
             return (boolean) _httpSession.getAttribute("isAdmin");
         }
         return false;
+    }
+
+    private void giveLoggedAndAdmin(ModelAndView mv){
+        mv.addObject("isLogged",_httpSession.getAttribute("isLogged"));
+        mv.addObject("isAdmin",_httpSession.getAttribute("isAdmin"));
     }
 
 }

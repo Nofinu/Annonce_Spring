@@ -1,16 +1,16 @@
 
 <header>
-  <nav class="d-flex flex-row align-items-center justify-content-between bg-dark px-2">
+  <nav class="d-flex flex-row align-items-center justify-content-between bg-dark px-2 py-2" >
     <div class="d-flex justify-content-around align-items-center">
-      <h1 class="text-primary">Annonce</h1>
+      <a href="/annonce" class="text-primary font-weight-bold mx-4" style="font-size: 30px; text-decoration: none" >Annonce</a>
       <div th:if="${isAdmin}">
         <a href="/annonce/category" class="btn btn-outline-info">Category</a>
-        <a href="/annonce/user" class="btn btn-outline-info">User</a>
+        <a href="/annonce/user" class="btn btn-outline-info mr-1">User</a>
       </div>
       <div th:if="${isLogged}">
         <a href="/annonce/add" class="btn btn-outline-info">Crée une Annonce</a>
         <a href="/annonce/favoris" class="btn btn-outline-info">Favoris</a>
-        <a href="/annonce/log/login" class="btn btn-outline-info">recherche</a>
+        <a href="/annonce/search" class="btn btn-outline-info">recherche</a>
       </div>
     </div>
 

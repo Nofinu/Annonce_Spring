@@ -3,6 +3,9 @@
 <head th:replace="~{fragments/head.html :: head}"></head>
 <body>
 
+<header th:replace="~{fragments/Header.html::header}"></header>
+
+<main>
   <h2>Category</h2>
   <div th:text="${message}"></div>
   <a href="/annonce/category/add" class="btn btn-outline-info">Add</a>
@@ -26,5 +29,6 @@
     </tr>
     </tbody>
   </table>
+</main>
 </body>
 </html>

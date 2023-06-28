@@ -3,8 +3,10 @@
 <head th:replace="~{fragments/head.html :: head}"></head>
 <body>
 
+<header th:replace="~{fragments/Header.html::header}"></header>
+
 <main>
-    <a th:href="@{/annonce/favoris/{id}(id = ${annonce.getId()})/{url}(url=${url})}" class="btn btn-outline-secondary text-warning"><i th:class="${favoris.contains(annonce.getId())}? 'bi bi-star-fill': 'bi bi-star'"></i></a>
+    <a th:href="@{/annonce/favoris/{id}/{url}(id = ${annonce.getId()},url=${annonce.getId()})}" class="btn btn-outline-secondary text-warning"><i th:class="${favoris.contains(annonce.getId())}? 'bi bi-star-fill': 'bi bi-star'"></i></a>
     <h2 th:text="${annonce.getTitle()}"></h2>
 
     <div th:text="${annonce.getContent()}"></div>

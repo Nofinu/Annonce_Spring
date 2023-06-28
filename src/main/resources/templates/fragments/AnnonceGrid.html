@@ -1,0 +1,26 @@
+
+<div th:if="${isLogged}" class="row" style="width: 90%;margin-top: 35px">
+  <div class="col-4" th:each="annonce : ${annonces}">
+    <div class="card my-1" >
+      <div class="card-body">
+        <div class="d-flex flex-row justify-content-between">
+          <h5 class="card-title" th:text="${annonce.getTitle()}"></h5>
+          <a th:href="@{/annonce/favoris/{id}/{url}(id = ${annonce.getId()},url=${url})}" class="btn btn-outline-secondary text-warning"><i th:class="${favoris.contains(annonce.getId())}? 'bi bi-star-fill': 'bi bi-star'"></i></a>
+        </div>
+        <div th:text="${#dates.format(annonce.getDateAdd(),'dd-MM-yyyy')}"></div>
+        <div class="d-flex flex-row justify-content-between">
+          <div th:text="${annonce.getPrice()}+'€'"></div>
+          <div th:text="${annonce.getUser().getUsername()}"></div>
+        </div>
+        <div class="d-flex flex-row flex-wrap">
+          <div class="border border-secondary text-secondary rounded p-2 mb-1"  th:each="category : ${annonce.getCategories()}" th:text="${category.getName()}"></div>
+        </div>
+        <div>
+          <a th:href="@{/annonce/{id}(id = ${annonce.getId()})}" class="btn btn-primary">Details</a>
+          <a th:if="${annonce.getUser().getId() == userId || isAdmin}" th:href="@{/annonce/edit/{id}(id = ${annonce.getId()})}" class="btn btn-info">Edit</a>
+          <a th:if="${annonce.getUser().getId() == userId || isAdmin}" th:href="@{/annonce/delete/{id}(id = ${annonce.getId()})}" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -25,6 +25,7 @@ public class UserController {
     public ModelAndView getUser(){
         ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         if(isAdmin()){
+            giveLoggedAndAdmin(modelAndView);
             modelAndView.addObject("userList",_serviceUser.findAll());
             modelAndView.setViewName("UserMainPage");
         }
@@ -46,5 +47,10 @@ public class UserController {
             return (boolean) _httpSession.getAttribute("isAdmin");
         }
         return false;
+    }
+
+    private void giveLoggedAndAdmin(ModelAndView mv){
+        mv.addObject("isLogged",_httpSession.getAttribute("isLogged"));
+        mv.addObject("isAdmin",_httpSession.getAttribute("isAdmin"));
     }
 }

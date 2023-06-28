@@ -51,16 +51,16 @@ public class AnnonceController {
         modelAndView.addObject("userId", (Integer) _httpSession.getAttribute("userId"));
         List<Integer> favoris = (List<Integer>) _httpSession.getAttribute("favoris");
         modelAndView.addObject("favoris", favoris);
-
-        modelAndView.addObject("url","annonce");
+        modelAndView.addObject("url",0);
 
         return modelAndView;
     }
 
     @GetMapping("/add")
     public ModelAndView getFormAddAnnonce() {
-        ModelAndView modelAndView = new ModelAndView("HomePage");
+        ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         if (isLogged()) {
+            giveLoggedAndAdmin(modelAndView);
             modelAndView.setViewName("FormAnnonce");
             modelAndView.addObject("categoryList", _serviceCategory.findAll());
         }
@@ -91,6 +91,7 @@ public class AnnonceController {
         ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         Annonce annonce = _serviceAnnonce.findById(id);
         if (isLogged() && (annonce.getUser().getId() == (Integer) _httpSession.getAttribute("userId") || (boolean) _httpSession.getAttribute("isAdmin"))) {
+            giveLoggedAndAdmin(modelAndView);
             modelAndView.addObject("categoryList", _serviceCategory.findAll());
             modelAndView.setViewName("FormAnnonce");
             modelAndView.addObject("annonce", annonce);
@@ -124,6 +125,7 @@ public class AnnonceController {
     public ModelAndView getAnnonceDetails(@PathVariable("id") Integer id) {
         ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         if (isLogged()) {
+            giveLoggedAndAdmin(modelAndView);
             Annonce annonce = _serviceAnnonce.findById(id);
             List<Integer> favoris =(List<Integer>) _httpSession.getAttribute("favoris");
             modelAndView.addObject("favoris",favoris);
@@ -139,5 +141,10 @@ public class AnnonceController {
             return (boolean) _httpSession.getAttribute("isLogged");
         }
         return false;
+    }
+
+    private void giveLoggedAndAdmin(ModelAndView mv){
+        mv.addObject("isLogged",_httpSession.getAttribute("isLogged"));
+        mv.addObject("isAdmin",_httpSession.getAttribute("isAdmin"));
     }
 }

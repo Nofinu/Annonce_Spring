@@ -3,27 +3,31 @@
 <head th:replace="~{fragments/head.html :: head}"></head>
 <body>
 
-<h2>User</h2>
+<header th:replace="~{fragments/Header.html::header}"></header>
+<main>
+    <h2>User</h2>
 
-<a href="/annonce/user/add" class="btn btn-outline-info">Add</a>
-<table class="table table-striped table-dark">
-    <thead>
-    <tr>
-        <th scope="col">#</th>
-        <th scope="col">username</th>
-        <th scope="col">Action</th>
+    <a href="/annonce/user/add" class="btn btn-outline-info">Add</a>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">username</th>
+            <th scope="col">Action</th>
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user : ${userList}">
-        <th th:text="${user.getId()}"></th>
-        <th th:text="${user.getUsername()}"></th>
-        <th>
-            <a th:href="@{/annonce/user/setstatut/{id}(id = ${user.getId()})}" th:class="${user.isActive()}? 'btn btn-outline-info' : 'btn btn-outline-danger'">Change Status</a>
-        </th>
-    </tr>
-    </tbody>
-</table>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${userList}">
+            <th th:text="${user.getId()}"></th>
+            <th th:text="${user.getUsername()}"></th>
+            <th>
+                <a th:href="@{/annonce/user/setstatut/{id}(id = ${user.getId()})}" th:class="${user.isActive()}? 'btn btn-outline-info' : 'btn btn-outline-danger'">Change Status</a>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
 </body>
 </html>

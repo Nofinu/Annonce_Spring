@@ -13,7 +13,7 @@
                 <div class="card-body">
                     <div class="d-flex flex-row justify-content-between">
                         <h5 class="card-title" th:text="${annonce.getTitle()}"></h5>
-                        <a th:href="@{/annonce/favoris/{id}(id = ${annonce.getId()})/{url}(url=${url})}" class="btn btn-outline-secondary text-warning"><i th:class="${favoris.contains(annonce.getId())}? 'bi bi-star-fill': 'bi bi-star'"></i></a>
+                        <a th:href="@{/annonce/favoris/{id}/{url}(id = ${annonce.getId()},url=-1)}" class="btn btn-outline-secondary text-warning"><i th:class="${favoris.contains(annonce.getId())}? 'bi bi-star-fill': 'bi bi-star'"></i></a>
                     </div>
                     <div th:text="${#dates.format(annonce.getDateAdd(),'dd-MM-yyyy')}"></div>
                     <div class="d-flex flex-row justify-content-between">
