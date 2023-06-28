@@ -43,18 +43,31 @@ public class RechercheController {
     @PostMapping("title")
     public ModelAndView postSearchTitle(@RequestParam("title") String title) {
         ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
-        if(isLogged()){
-            initSearchPage(modelAndView);
-            modelAndView.addObject("annonces",_serviceAnnonce.findBytitle(title));
-        }
+        searchTitle(modelAndView,title);
         return modelAndView;
     }
 
+    @GetMapping("/title/{title}")
+    public ModelAndView getSearchTitle(@PathVariable("title") String title) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
+        searchTitle(modelAndView,title);
+        return modelAndView;
+    }
+    private void searchTitle (ModelAndView modelAndView, String title){
+        if(isLogged()){
+            initSearchPage(modelAndView);
+            _httpSession.setAttribute("categoryIdSearch",null);
+            _httpSession.setAttribute("titleSearch",title);
+            modelAndView.addObject("annonces",_serviceAnnonce.findBytitle(title));
+        }
+    }
     @GetMapping("/{categ}")
     public ModelAndView getSearchCategory (@PathVariable("categ")Integer idCategory){
         ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
         if(isLogged()){
             initSearchPage(modelAndView);
+            _httpSession.setAttribute("categoryIdSearch",idCategory);
+            _httpSession.setAttribute("titleSearch","");
             modelAndView.addObject("annonces",_serviceAnnonce.findByCategory(idCategory));
         }
         return modelAndView;

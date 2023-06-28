@@ -61,7 +61,17 @@ public class FavorisController {
                     modelAndView.setViewName("redirect:/annonce/favoris");
                     break;
                 case -2:
-                    modelAndView.setViewName("redirect:/annonce/search");
+                    String titleSearch = (String) _httpSession.getAttribute("titleSearch");
+                    int categoryIdSearch = 0;
+                    if(_httpSession.getAttribute("categoryIdSearch")!=null){
+                        categoryIdSearch = (Integer) _httpSession.getAttribute("categoryIdSearch");
+                    }
+                    if(titleSearch.equals("")){
+                        modelAndView.setViewName("redirect:/annonce/search/"+categoryIdSearch);
+                    }else{
+                        modelAndView.setViewName("redirect:/annonce/search/title/"+titleSearch);
+                    }
+
                     break;
                 default:
                     modelAndView.setViewName("redirect:/annonce/"+url);
