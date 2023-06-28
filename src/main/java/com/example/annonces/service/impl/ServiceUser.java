@@ -50,6 +50,18 @@ public class ServiceUser implements IServiceUser {
     }
 
     @Override
+    public boolean updateAdmin(int id) {
+        Optional<User> userFind = _userRepository.findById(id);
+        if(userFind.isPresent()){
+            User user = userFind.get();
+            user.setAdmin();
+            _userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public boolean isAdmin(String username) {
         User user = _userRepository.findByUsername(username);
         return user.isAdmin();

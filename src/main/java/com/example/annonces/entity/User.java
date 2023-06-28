@@ -20,9 +20,21 @@ public class User {
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<Annonce> annonces;
 
+    public User() {
+    }
+
+    public User(String username, String password, boolean isAdmin) {
+        this.username = username;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
 
     public void setActive (){
         this.isActive = !isActive;
+    }
+
+    public void setAdmin (){
+        this.isAdmin = !isAdmin;
     }
 
     @Override

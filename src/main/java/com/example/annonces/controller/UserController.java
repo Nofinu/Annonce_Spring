@@ -32,6 +32,16 @@ public class UserController {
         return modelAndView;
     }
 
+    @GetMapping("/setadmin/{id}")
+    public ModelAndView getUserAdd(@PathVariable("id")Integer id){
+        ModelAndView modelAndView = new ModelAndView("redirect:/annonce");
+        if(isAdmin()){
+            modelAndView.setViewName("redirect:/annonce/user");
+            _serviceUser.updateAdmin(id);
+        }
+        return modelAndView;
+    }
+
     @GetMapping("/setstatut/{id}")
     public ModelAndView getSetStatut (@PathVariable("id")Integer id){
         ModelAndView modelAndView = new ModelAndView("redirect:/annonce");

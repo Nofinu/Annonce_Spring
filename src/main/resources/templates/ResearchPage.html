@@ -14,7 +14,7 @@
     </form>
 
     <div class="d-flex flex-row flex-wrap ml-5">
-      <a th:each="category : ${categoryList}" th:text="${category.getName()}" th:href="@{/annonce/search/{categ}(categ = ${category.getId()})}" class="btn btn-outline-secondary" ></a>
+      <a th:each="category : ${categoryList}" th:text="${category.getName()}" th:href="@{/annonce/search/{categ}(categ = ${category.getId()})}" class="btn btn-outline-secondary mx-1" ></a>
     </div>
   </div>
 
